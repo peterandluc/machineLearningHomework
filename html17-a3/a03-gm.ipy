@@ -1,0 +1,605 @@
+# coding: utf-8
+#
+# Hot Topics in Machine Learning, University of Mannheim, 2017
+# Author: Rainer Gemulla
+# Assignment 3
+
+# <codecell>
+%matplotlib
+
+import math
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import numpy as np
+import numpy.random
+from tabulate import tabulate ## conda install tabulate
+from sortedcontainers import SortedSet ## conda install sortedcontainers
+from collections import OrderedDict
+from functools import reduce
+import numpy.random
+import codecs
+import itertools
+import pickle
+import pycrfsuite # conda install -c conda-forge pycrfsuite
+from sklearn.metrics import classification_report
+
+inNotebook = False # change this to True if you use a notebook
+def nextplot():
+    if inNotebook:
+        plt.figure()  # this creates a new plot
+    else:
+        plt.clf()     # and this clears the current one
+
+# <codecell>
+# After loading this file, try "help(Var)", "help(Dist)", "help(Factor)", and
+# "help(FactorGraph)". You can also have a look at this file for additional
+# details, although this shouldn't be necessary.
+%run -i "a03-helper.py"
+
+# <markdowncell>
+# # API examples
+
+# <codecell>
+# We are using the Dist object to represent a joint distribution over a set of
+# variables. We usually won't create such a distribution directly, but this
+# example shows you how to do so anyway. The example is the Hayfever/Flu
+# distribution from the lecture slides.
+#
+# we first create the variables
+Hayfever = Var('Hayfever', 2) ## 2 = two possible values = binary
+Flu = Var('Flu', 2)
+print('Name =', Hayfever.name, '; domain size =', Hayfever.K, '; value =', Hayfever.value)
+print(Hayfever)
+
+# <codecell>
+# and then the distribution
+dist = Dist([Hayfever, Flu], np.array([[.2, .4], [.35, .05]]))
+print(dist)
+
+# <codecell>
+# a distribution consists of a list of variables (vars) and an array holding the
+# joint probabilities (values)
+print([ var.name for var in dist.vars ])
+print(dist.values)
+print(dist.values[1,0]) # probability that var0=1 (Hayfever) and var1=0 (Flu)
+
+# <codecell>
+# We can determine the probability associated with the current values for all variables.
+print(Hayfever, Flu)
+print(dist.value())
+
+# <codecell>
+# We can sample from a distribution; the result is another `Dist`, but this time
+# it holds sample frequencies (i.e., it's not normalized). There is a function
+# to normalize as well.
+print( dist.sample(100) )
+print( dist.sample(100).normalize() )
+
+# <codecell>
+# Using the sum rule, variables can be marginalized out.
+print(dist.marginalize(Hayfever))
+print(dist.marginalize(Flu))
+
+# <codecell>
+# Finally, we can fix a value of a variable. Here we compute the
+# joint P(Hayfever, Flu=1), then the conditional P(Hayfever | Flu=1)
+print( dist.fix(Flu, 1) )
+print( dist.fix(Flu, 1).normalize() )
+
+# <codecell>
+# Create variables of misconception example
+A = Var('Anna', 2)
+B = Var('Bob', 2)
+C = Var('Charlie', 2)
+D = Var('Debbie', 2)
+
+# <codecell>
+# Create factors for misconception example. Factors are also `Dist`s, i.e., they
+# have the same functionality as illustrated above.
+phi1 = Factor([A,B])
+phi2 = Factor([B,C])
+phi3 = Factor([C,D])
+phi4 = Factor([D,A])
+phi1.values[:] = [[30,5],[1,10]]
+phi2.values[:] = [[100,1],[1,100]]
+phi3.values[:] = [[1,100],[100,1]]
+phi4.values[:] = [[100,1],[1,100]]
+print(phi1)
+
+# <codecell>
+# But we can also compute factor products.
+phi12 = phi1*phi2
+print(phi12)
+
+# <codecell>
+# Create factor graph for misconception example.
+Gm = FactorGraph()
+Gm.add_vars([A,B,C,D])
+Gm.add_factors([phi1,phi2,phi3,phi4])
+print(Gm)
+
+# <codecell>
+# Access the data. (Use these only to read, change using the API illustrated
+# above and below.)
+print([ var.name for var in Gm.vars ])
+print( Gm.factors )
+print( Gm.factors_for[A] )
+print( Gm.value() )
+
+# <codecell>
+# Copy and modify factor graphs
+G = Gm.copy() # G shares variables and factors with Gm, but not the "structure"
+A.value = B.value = C.value = D.value = 1
+G.add_factor(phi12)
+print(G, G.value())
+G.remove_factors([phi1, phi2])
+print(G, G.value())
+G.remove_var(D) # removes associated factors, too
+print(G, G.value())
+
+# <markdowncell>
+# # 1 Inference in Factor Graphs
+
+# <markdowncell>
+# ## 1a Naive
+
+# <codecell>
+def naive(G):
+    """Perform naive inference on the given factor graph `G`.
+
+    Returns
+    -------
+    a ``Dist`` object for the joint distribution represented by the factor graph
+    """
+    # YOUR CODE HERE
+
+# <codecell>
+# test your solution; this should give (as in the lecture)
+#   Anna    Bob    Charlie    Debbie        value
+# ------  -----  ---------  --------  -----------
+#      0      0          0         0  0.041656
+#      0      0          0         1  0.041656
+#      0      0          1         0  0.041656
+#      0      0          1         1  4.1656e-06
+#      0      1          0         0  6.94267e-05
+#      0      1          0         1  6.94267e-05
+#      0      1          1         0  0.694267
+#      0      1          1         1  6.94267e-05
+#      1      0          0         0  1.38853e-05
+#      1      0          0         1  0.138853
+#      1      0          1         0  1.38853e-05
+#      1      0          1         1  1.38853e-05
+#      1      1          0         0  1.38853e-06
+#      1      1          0         1  0.0138853
+#      1      1          1         0  0.0138853
+#      1      1          1         1  0.0138853
+distm = naive(Gm)
+print(distm)
+
+# <codecell>
+# To compare two distributions, we use L1 distance here. This is not necessarily
+# the most suitable measure, but it's easy to understand: sum of absolute
+# difference between corresponding probabilities.
+def l1(dist1, dist2):
+    if isinstance(dist1, Dist):
+        return np.sum(np.abs(dist1.values - dist2.values))
+    else: ## lists of marginals -> list of L1 errors
+        return np.array(list(map(lambda i: np.sum(np.abs(dist1[i]-dist2[i])),
+                                 range(len(dist1)))))
+
+# <codecell>
+# Here is an example using independent sampling; we show the actual probability
+# (p), the number of samples (n), and the relative frequency (f)
+n = 10000
+samplem = distm.sample(n)
+freqm = samplem.normalize()
+print( disttable([ distm, samplem, freqm ], ['p', 'n', 'f']) )
+print( 'L1 error:', l1(distm, freqm) )
+
+# <markdowncell>
+# ## 1b Variable elimination
+
+# <codecell>
+def eliminate(G, vars):
+    """Return a copy of factor graph `G` in which `vars` have been eliminated."""
+    Gnew = G.copy()
+    if not isinstance(vars, list):
+        vars = [ vars ]
+    for var in vars:
+        # eliminate var from Gnew using variable elimination
+        # YOUR CODE HERE
+    return Gnew
+
+# <codecell>
+# test it; this should give
+#   Anna    Charlie    Debbie            p
+# ------  ---------  --------  -----------
+#      0          0         0  0.0417254
+#      0          0         1  0.0417254
+#      0          1         0  0.735923
+#      0          1         1  7.35923e-05
+#      1          0         0  1.52739e-05
+#      1          0         1  0.152739
+#      1          1         0  0.0138992
+#      1          1         1  0.0138992
+#
+#   Anna         p
+# ------  --------
+#      0  0.819448
+#      1  0.180552
+print( naive( eliminate(Gm,B) ) )
+print( naive( eliminate(Gm,[B,C,D]) ) )
+
+# <codecell>
+# this should give the same results
+print( naive(Gm).marginalize(B) )
+print( naive(Gm).marginalize([B,C,D]) )
+
+# <markdowncell>
+# ## 1c Gibbs Sampling
+
+# <codecell>
+def gibbs(G, vars, log=False):
+    """Resample the values of the variables in `vars` using Gibbs sampling.
+
+    Variables are resampled in the order given in `vars`. For each variable, its
+    value is resampled conditioned of the values of all other variables in `G`.
+
+    If `log` is set to `True`, resampling is performed in log space for improved
+    numerical stability.
+    """
+    for var in vars:
+        ## Resample var. As before, you may use numpy.random.choice() to perform
+        ## the sampling.
+        # YOUR CODE HERE
+
+# <codecell>
+# test it: the result of this should be close to expected. For example:
+#   Anna    expected    observed    estimated
+# ------  ----------  ----------  -----------
+#      0    0.230769         232        0.232
+#      1    0.769231         768        0.768
+B.value = C.value = 0
+D.value = 1
+expected = distm.fix(B,B.value).fix(C,C.value).fix(D,D.value).normalize()
+observed = run_gibbs(Gm, [A], 1000)
+print( disttable([expected,observed,observed.normalize()],
+                 ['expected', 'observed', 'estimated']) )
+
+# <codecell>
+# similarly here; for example:
+#   Anna    Bob    Charlie    Debbie     expected    observed    estimated
+# ------  -----  ---------  --------  -----------  ----------  -----------
+#      0      0          0         0  0.041656             54        0.054
+#      0      0          0         1  0.041656             51        0.051
+#      0      0          1         0  0.041656             39        0.039
+#      0      0          1         1  4.1656e-06            0        0
+#      0      1          0         0  6.94267e-05           0        0
+#      0      1          0         1  6.94267e-05           0        0
+#      0      1          1         0  0.694267            645        0.645
+#      0      1          1         1  6.94267e-05           0        0
+#      1      0          0         0  1.38853e-05           0        0
+#      1      0          0         1  0.138853            163        0.163
+#      1      0          1         0  1.38853e-05           0        0
+#      1      0          1         1  1.38853e-05           0        0
+#      1      1          0         0  1.38853e-06           0        0
+#      1      1          0         1  0.0138853            17        0.017
+#      1      1          1         0  0.0138853            14        0.014
+#      1      1          1         1  0.0138853            17        0.017
+observed = run_gibbs(Gm, Gm.vars, 1000)
+print( disttable([distm,observed,observed.normalize()],
+                 ['expected', 'observed', 'estimated']) )
+
+# <markdowncell>
+# ## 1d Experimenting with Gibbs Sampling
+
+# <codecell>
+# From now on, we only look at marginals. Here is an example:
+def marginals(dist):
+    """Computes the marginal probabilites of each variable in `dist`.
+
+    `dist` needs to be of type `Dist`. Returns a list with one entry per
+    variable, in the order given in `dist.vars`. Each entry is an array which
+    contains the marginal probabilities of the corresponding variable (number of
+    elements = size of domain of that variable).
+    """
+    result = list()
+    for i in range(len(dist.vars)):
+        vars = dist.vars.copy()
+        del vars[i]
+        result.append( np.array(dist.marginalize(vars).values) )
+    return result
+
+# <codecell>
+# Here is an example on how to use it
+n = 1000
+expected = marginals(distm)
+print("Expected:", expected)
+estimated_i = marginals( distm.sample(n).normalize() )
+print("Estimated (independent):", estimated_i)
+# for Gibbs sampling, use marginals argument (do NOT first compute the joint and
+# then the marignals)
+estimated_g = run_gibbs(Gm, Gm.vars, n, marginals=True, normalize=True)
+print("Estimated (Gibbs):", estimated_g)
+
+## l1 on marginals gives one error entry per variable
+print(l1(expected, estimated_i))
+print(l1(expected, estimated_g))
+
+# <codecell>
+# Now plot the average L1 estimation error with independent sampling and with Gibbs
+# sampling for various choices of n without warmup and without skips.
+# YOUR CODE HERE
+
+# <codecell>
+# Now fix the sample size to 1000 and investigate the impact of warmup and skip.
+# YOUR CODE HERE
+
+# <markdowncell>
+# # 2 Factor Graphs and Naive Bayes
+
+# <codecell>
+# let's load a Naive Bayes model trained for the previous exercise
+with open('data/model_nb2.pckl', 'rb') as f:
+    model_nb2 = pickle.load(f)
+
+# <codecell>
+# We can convert the model to a factor graph
+G_nb2, Y, Xs = nb_to_factorgraph(model_nb2)
+
+# <codecell>
+# to extract the image represented by the current variables (all black now
+# becaue every variable is initially 0)
+nextplot()
+showdigit( np.array([ X.value for X in Xs]) )
+
+# <codecell>
+# now explore how well Gibbs sampling works
+# YOUR CODE HERE
+
+# <markdowncell>
+# # 3 Conditional Random Fields
+
+# <codecell>
+# Read in the data.
+#
+# docs is a list of of documents. Each document is a list of sentences, each
+# sentence is a list of (token, label)-pairs. Label is 1 if token is part of
+# named entity, else 0.
+#
+# sentences is a list of all sentences with part-of-speech tags added. Each
+# element is a (token, part-of-speech, label)-triple.
+#
+# Dataset has been created using (if you want, see code in a03-helper.py for
+# details):
+# docs, sentences = load_reuters()
+# pickle.dump((docs,sentences), open('data/reuters.pckl', 'wb'))
+with open('data/reuters.pckl', 'rb') as f:
+    docs, sentences = pickle.load(f)
+print('Number of sentences:', len(sentences))
+print('First sentence:', sentences[0])
+
+# <codecell>
+# split into input, pos feature, and output sequences
+X = [ [ t for t,p,l in sentence ] for sentence in sentences ]
+Fpos_tag = [ [ p for t,p,l in sentence ] for sentence in sentences ]
+Y = [ [ str(l) for t,p,l in sentence ] for sentence in sentences ]
+print('X[0]:', X[0])
+print('Fpos_tag[0]:', Fpos_tag[0])
+print('Y[0]:', Y[0])
+
+# <codecell>
+# split into training and test set (each containing sentence numbers)
+numpy.random.seed(1)
+train = list(numpy.random.choice(range(len(X)), size=int(0.8*len(X)), replace=False))
+test = [ i for i in range(len(X)) if i not in train ]
+
+# <markdowncell>
+# ## 3a Features
+
+# <codecell>
+# modify this function to experiment with other features
+def get_features(i, j):
+    """Return a list of features for the `j`-th output of input sentence `X[i]`.
+
+    Features are binary and represented as a string. All features with the same
+    name share the same weight (parameter sharing). This function should return
+    the names of the features relevant for (i.e., connected to) the `j`-th
+    output `Y[i][j]` of input sentence `X[i]`. These features can be computed
+    from the corresponding word `X[i][j]`, but also from arbirary other elements
+    of sentence `X[i]`.
+    """
+
+    # features for all outputs
+    features = [
+        'bias',                    # bias feature
+        'postag=' + Fpos_tag[i][j] # POS tag of current word feature
+    ]
+
+    # features for first word
+    if j==0:
+        features.extend([
+            'start'                # start of sentence bias feature
+        ])
+
+    # features for last word
+    if j==len(X[i])-1:
+        features.extend([
+            'end'                  # end of sentence bias feature
+        ])
+
+    # features for all but first word
+    if j>0:
+        features.extend([
+            '-1:postag='+Fpos_tag[i][j-1]   # POS tag of previous word feature
+        ])
+
+    # features for all but last word
+    if j<len(X[i])-1:
+        features.extend([
+            '+1:postag='+Fpos_tag[i][j+1]   # POS tag of next word feature
+        ])
+
+    # all done
+    return features
+
+# <codecell>
+# here are the feature extracted for each word of the first sentence
+for j in range(len(X[0])):
+    print(X[0][j], ":", get_features(0,j))
+
+# <codecell>
+# let's extract all features
+F = [ [ get_features(i,j) for j in range(len(X[i])) ] for i in range(len(X)) ]
+print("F[0]:", F[0])
+
+# <codecell>
+# Prepare training and testing data; we use letter F to refer to features
+def compute_train_test(F, Y, train, test):
+    Xtrain = [ X[i] for i in train]
+    Ftrain = [ F[i] for i in train ]
+    Ytrain = [ Y[i] for i in train ]
+    Xtest = [ X[i] for i in test]
+    Ftest = [ F[i] for i in test ]
+    Ytest = [ Y[i] for i in test ]
+    return Xtrain, Ftrain, Ytrain, Xtest, Ftest, Ytest
+Xtrain, Ftrain, Ytrain, Xtest, Ftest, Ytest = compute_train_test(F, Y, train, test)
+
+# <codecell>
+# Use pycrfsuite to train the CRF. Fitted model is stored in file `name`.
+def crf_train(Ftrain, Ytrain, name='model.crfsuite', c1=0.1, c2=0.01, max_iterations=200):
+    trainer = pycrfsuite.Trainer(verbose=True)
+    trainer.set_params({
+        'c1': c1,                         # weight for L1 regularization
+        'c2': c2,                         # weight for L2 regularization
+        'max_iterations': max_iterations, # number of iterations for training
+        'feature.possible_transitions': True # include weights for all possible transitions
+    })
+    for f,y in zip(Ftrain, Ytrain):
+        trainer.append(f,y)
+    trainer.train(name)
+
+crf_train(Ftrain, Ytrain)
+
+# <codecell>
+# Now use the model to predict
+def crf_predict(Ftest, name='model.crfsuite'):
+    tagger = pycrfsuite.Tagger()
+    tagger.open(name)
+    return tagger, [ tagger.tag(f) for f in Ftest ]
+
+tagger, Ypred = crf_predict(Ftest)
+
+# <codecell>
+# Let's take a look at a a random test sentence
+i = numpy.random.choice(len(Xtest))
+for j in range(len(Xtest[i])):
+    print(Xtest[i][j], ": ", "label=", Ytest[i][j], "; predicted=", Ypred[i][j] )
+
+# <codecell>
+# Evaluate the performance of your model (micro)
+truth = np.array([ int(label) for y in Ytest for label in y ])
+pred = np.array([ int(label) for y in Ypred for label in y ])
+print( classification_report(truth, pred) )
+
+# <codecell>
+# do everything at once
+def crf_train_and_predict(f=get_features, name='model.crfsuite',
+                      c1=0.1, c2=0.02, max_iterations=200):
+    F = [ [ f(i,j) for j in range(len(X[i])) ] for i in range(len(X)) ]
+    Xtrain, Ftrain, Ytrain, Xtest, Ftest, Ytest = compute_train_test(F, Y, train, test)
+    crf_train(Ftrain, Ytrain, name, c1, c2, max_iterations)
+    return crf_predict(Ftest, name)
+
+tagger, Ypred = crf_train_and_predict(get_features)
+
+# <codecell>
+# Now experiment with your own set of features. Examples:
+# - the current word (e.g., in lowercase for normalization)
+# - prefix/suffix features for current word (e.g., ends with "ion")
+# - whether current word starts capitalized
+# - whether current word is a number
+# - whether current word contains special characters (e.g., dollar sign)
+# - similar features for surrounding words
+# - combined features of current and surrounding word
+def get_features_improved(i, j):
+    # YOUR CODE HERE
+
+# <codecell>
+# test it
+tagger_improved, Ypred_improved = \
+    crf_train_and_predict(get_features_improved, 'model_improved.crfsuite')
+pred_improved = np.array([ int(label) for y in Ypred_improved for label in y ])
+print( classification_report(truth, pred) )
+print( classification_report(truth, pred_improved) )
+
+# <markdowncell>
+# ## 3b Feature inspection
+
+# <codecell>
+# inspect weights of transition features (between Y[i-1] and Y[i])
+info = tagger.info()
+transition_f = np.array([ [ l_from, l_to, info.transitions[(str(l_from),str(l_to))] ] \
+                          for l_to in range(2) for l_from in range(2) ])
+print( tabulate(transition_f, ["from", "to", "weight"]) )
+
+# <codecell>
+# inspect weights of state features (for Y[i])
+state_f = np.array([ [ fl[0], fl[1], w ] \
+                      for fl, w in info.state_features.items() ])
+print( tabulate(state_f, ["feature", "label", "weight"]) )
+
+# <codecell>
+# only highest weighted features
+state_f_sorted = np.array(sorted(state_f, reverse=True,
+                                 key=lambda r: abs(float(r[2]))))
+print( tabulate(state_f_sorted[:30,:], ["feature", "label", "weight"]) )
+
+# <markdowncell>
+# ## 3c/3d CRF to factor graph
+
+# <codecell>
+# convert a CRF model to a factor graph (for a single test example)
+i = 1 ## CRF should make an error on this test example
+info = tagger.info()
+G = crf_to_factorgraph(Ftest[i], info)
+print(G.names())
+print(G)
+
+# <codecell>
+# print true labels, predicted labels, and sampled labels
+print("Sentence:")
+print(Xtest[i])
+print("Truth:")
+print([ int(label) for label in Ytest[i] ])
+print("Predicted (MAP estimate by pycrfsuite):")
+print([ int(label) for label in Ypred[i] ])
+nsamples = 20
+print("Sampled (from factor graph of CRF):")
+for s in range(nsamples):
+    marginals = run_gibbs(G, G.vars, 1000, marginals=True)
+    print( G.values(), "weight: {:28.0f}".format(G.value()) )
+
+# <codecell>
+# convert impoved CRF model to a factor graph (for a single test example)
+i = 1
+F_improved = [ [ get_features_improved(i,j)
+                 for j in range(len(X[i])) ] for i in range(len(X)) ]
+info_improved = tagger_improved.info()
+G_improved = crf_to_factorgraph(F_improved[test[i]], info_improved)
+print(G_improved.names())
+print(G_improved)
+
+# <codecell>
+# print true labels, predicted labels, and sampled labels for improved model
+print("Sentence:")
+print(Xtest[i])
+print("Truth:")
+print([ int(label) for label in Ytest[i] ])
+print("Predicted (MAP estimate by pycrfsuite):")
+print([ int(label) for label in Ypred_improved[i] ])
+nsamples = 20
+print("Sampled (from factor graph of CRF):")
+for s in range(nsamples):
+    marginals = run_gibbs(G_improved, G_improved.vars, 1000, marginals=True)
+    print( G_improved.values(), "weight: {:28.0f}".format(G_improved.value()) )
