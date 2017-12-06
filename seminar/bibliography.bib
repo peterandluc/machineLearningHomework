@@ -1,29 +1,3 @@
-@book{Aho:72,
-    author  = {Alfred V. Aho and Jeffrey D. Ullman},
-    title   = {The Theory of Parsing, Translation and Compiling},
-    year    = "1972",
-    volume  = "1",
-    publisher = {Prentice-Hall},
-    address = {Englewood Cliffs, NJ}
-}
-
-
-@book{APA:83,
-    author  = {{American Psychological Association}},
-    title   = {Publications Manual},
-    year    = "1983",
-   publisher = {American Psychological Association},
-   address = {Washington, DC}
-}
-
-@incollection{ACM:83,
-	author = {Association for Computing Machinery},
-	year = "1983",
-	booktitle = {Computing Reviews},
-	volume = "24",
-	number = "11",
-	pages = "503--512"
-}
 
 @article{Chandra:81,
 	author = {Ashok K. Chandra and Dexter C. Kozen and Larry J. Stockmeyer},
@@ -35,11 +9,102 @@
 	pages = "114--133"
 }
 
+@inproceedings{show-reward-tell-automatic-generation-narrative-paragraph-photo-stream-adversarial-training,
+author = {Wang, Jing and Fu, Jianlong and Tang, Jinhui and Li, Zechao and Mei, Tao},
+title = {Show, Reward and Tell: Automatic Generation of Narrative Paragraph from Photo Stream by Adversarial Training},
+booktitle = {},
+year = {2018},
+month = {February},
+abstract = {Impressive image captioning results (i.e., an objective description for an image) are achieved with plenty of training pairs. In this paper, we take one step further to investigate the creation of narrative paragraph for a photo stream. This task is even more challenging due to the difficulty in modeling an ordered photo sequence and in generating a relevant paragraph with expressive language style for storytelling. The difficulty can even be exacerbated by the limited training data, so that existing approaches almost focus on search based solutions. To deal with these challenges, we propose a sequence-to-sequence modeling approach with reinforcement learning and adversarial training. First, to model the ordered photo stream, we propose a hierarchical recurrent neural network as story generator, which is optimized by reinforcement learning with rewards. Second, to generate relevant and story-style paragraphs, we design the rewards with two critic networks, including a multi-modal and a language style discriminator. Third, we further consider the story generator and reward critics as adversaries. The generator aims to create indistinguishable paragraphs to human-level stories,  whereas the critics aim at distinguishing them and further improving the generator by policy gradient. Experiments on three widely-used datasets show the effectiveness, against state-of-the-art methods with relative increase of 20:2% by METEOR. We also show the subjective preference for the proposed approach over the baselines through a user study with 30 human subjects.
 
-@book{Gusfield:97,
-    author  = {Dan Gusfield},
-    title   = {Algorithms on Strings, Trees and Sequences},
-    year    = "1997",
-    publisher = {Cambridge University Press},
-    address = {Cambridge, UK}
+},
+publisher = {},
+url = {https://www.microsoft.com/en-us/research/publication/show-reward-tell-automatic-generation-narrative-paragraph-photo-stream-adversarial-training/},
+address = {},
+pages = {},
+journal = {},
+volume = {},
+chapter = {},
+isbn = {},
+}
+
+@incollection{NIPS2015_5776,
+title = {Expressing an Image Stream with a Sequence of Natural Sentences},
+author = {Park, Cesc C and Kim, Gunhee},
+booktitle = {Advances in Neural Information Processing Systems 28},
+editor = {C. Cortes and N. D. Lawrence and D. D. Lee and M. Sugiyama and R. Garnett},
+pages = {73--81},
+year = {2015},
+publisher = {Curran Associates, Inc.},
+url = {http://papers.nips.cc/paper/5776-expressing-an-image-stream-with-a-sequence-of-natural-sentences.pdf}
+}
+
+@Article{Simonyan14c,
+    author       = "Simonyan, K. and Zisserman, A.",
+    title        = "Very Deep Convolutional Networks for Large-Scale Image Recognition",
+    journal      = "CoRR",
+    volume       = "abs/1409.1556",
+    year         = "2014"
+}
+
+@article{DBLP:journals/corr/MikolovSCCD13,
+  author    = {Tomas Mikolov and
+               Ilya Sutskever and
+               Kai Chen and
+               Greg Corrado and
+               Jeffrey Dean},
+  title     = {Distributed Representations of Words and Phrases and their Compositionality},
+  journal   = {CoRR},
+  volume    = {abs/1310.4546},
+  year      = {2013},
+  url       = {http://arxiv.org/abs/1310.4546},
+  archivePrefix = {arXiv},
+  eprint    = {1310.4546},
+  timestamp = {Wed, 07 Jun 2017 14:40:03 +0200},
+  biburl    = {http://dblp.org/rec/bib/journals/corr/MikolovSCCD13},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@INPROCEEDINGS{1467314, 
+author={S. Chopra and R. Hadsell and Y. LeCun}, 
+booktitle={2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05)}, 
+title={Learning a similarity metric discriminatively, with application to face verification}, 
+year={2005}, 
+volume={1}, 
+number={}, 
+pages={539-546 vol. 1}, 
+keywords={face recognition;learning (artificial intelligence);L1 norm;discriminative loss function;face recognition;face verification;geometric distortion;semantic distance approximation;similarity metric learning;Artificial neural networks;Character generation;Drives;Face recognition;Glass;Robustness;Spatial databases;Support vector machine classification;Support vector machines;System testing}, 
+doi={10.1109/CVPR.2005.202}, 
+ISSN={1063-6919}, 
+month={June},}
+
+@ARTICLE{730558, 
+author={L. Itti and C. Koch and E. Niebur}, 
+journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
+title={A model of saliency-based visual attention for rapid scene analysis}, 
+year={1998}, 
+volume={20}, 
+number={11}, 
+pages={1254-1259}, 
+keywords={computer vision;feature extraction;image recognition;neural nets;target tracking;dynamical neural network;feature extraction;rapid scene analysis;saliency;scene understanding;target detection;topographical saliency map;visual attention;visual search;Biological system modeling;Brain modeling;Computer architecture;Feature extraction;Hardware;Image analysis;Layout;Neural networks;Object detection;Visual system}, 
+doi={10.1109/34.730558}, 
+ISSN={0162-8828}, 
+month={Nov},}
+
+@article{DBLP:journals/corr/ChungGCB14,
+  author    = {Junyoung Chung and
+               {\c{C}}aglar G{\"{u}}l{\c{c}}ehre and
+               KyungHyun Cho and
+               Yoshua Bengio},
+  title     = {Empirical Evaluation of Gated Recurrent Neural Networks on Sequence
+               Modeling},
+  journal   = {CoRR},
+  volume    = {abs/1412.3555},
+  year      = {2014},
+  url       = {http://arxiv.org/abs/1412.3555},
+  archivePrefix = {arXiv},
+  eprint    = {1412.3555},
+  timestamp = {Wed, 07 Jun 2017 14:40:04 +0200},
+  biburl    = {http://dblp.org/rec/bib/journals/corr/ChungGCB14},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
 }

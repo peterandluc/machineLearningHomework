@@ -5,6 +5,9 @@
 \usepackage{fss2017seminar}
 \usepackage{times}
 \usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\graphicspath{ {images/} }
 
 \aclfinalcopy % Uncomment this line for the final submission
 
@@ -46,44 +49,117 @@
 
 \maketitle
 
-	\begin{abstract}
-	When machine learning techniques develop rapidly in image captioning, other extension relevant areas appeal to many researchers doing further study. Among them generating story from sequential photo stream becomes quite interesting and challenging task. Compared with single image captioning, this task needs to handle with two mainly problems facing to researchers, large visual variance in sequence and longterm language coherence among multiple sentences. Till now those two critical questions are solved by different approaches. In this paper, we mainly focus on one of them, generating story from sequential photos stream via Bidirectional Attention Recurrent Neural Network method, and discus several relevant approaches from first paper to state-of-the-art.   
-	\end{abstract}
+\begin{abstract}
+When machine learning techniques develop rapidly in image captioning, other extension relevant areas appeal to many researchers doing further study. Among them generating story from sequential photo stream becomes quite interesting and challenging task. Compared with single image captioning, this task needs to handle with two mainly problems facing to researchers, large visual variance in sequence and longterm language coherence among multiple sentences. Till now those two critical questions are solved by different approaches. In this paper, we mainly focus on one of them, generating story from sequential photos stream via Bidirectional Attention Recurrent Neural Network method, and discus several relevant approaches from first paper to state-of-the-art.   
+\end{abstract}
 
-	\section{Introduction}
+\section{Introduction}
 	
 
 
-	\section{Related Work}
+\section{Related Work}
 	
-	Due to interaction between computer vision and natural language processing is new topic, particularly in image description, there are several researches divided in three categories: single-frame to single-sentence, multi-frame to single-sentence and multi-frame to multi-sentence.		
+Due to interaction between computer vision and natural language processing is new topic, particularly in image description, there are several researches divided in three categories: single-frame to single-sentence, multi-frame to single-sentence and multi-frame to multi-sentence.		
 		
-		\subsection{ Single-frame to single-sentence}
-		These researches focus on image captioning task, which can be classified into two sub-categories: semantic element based methods
+\subsection{ Single-frame to single-sentence}
+These researches focus on image captioning task, which can be classified into two sub-categories: semantic element based methods
 
-		\subsection{Multi-frame to single-sentence}
-		This family of approaches, mainly focus on video captioning to captures the temporal dynamics in variable-length of video frames sequence and to map them to a variable-length of words.		
+\subsection{Multi-frame to single-sentence}
+This family of approaches, mainly focus on video captioning to captures the temporal dynamics in variable-length of video frames sequence and to map them to a variable-length of words.		
 		
 		
-		\subsection{Multi-frame to multi-sentence}
-		The work by is the first scheme to explore the task of image streams to sentence sequence.		
+\subsection{Multi-frame to multi-sentence}
+The work by is the first scheme to explore the task of image streams to sentence sequence.		
 		
 		
-	\section{Approach}
-		\subsection{Joint Embedding for Semantic Space}
+\section{Approach}
+In this part, we mainly introduce our topic model Bidirectional Attentional Recurrent Neural Networks, and then briefly explain two related but important models, Coherence Recurrent Convolutional Network \cite{NIPS2015_5776} and Generating Narrative Paragraph by Adversarial Training \cite{show-reward-tell-automatic-generation-narrative-paragraph-photo-stream-adversarial-training}. Particularly  the paper which proposes Coherence Recurrent Convolutional Network is the first paper in this field and the paper which proposes using Adversarial Training is the newest paper till now.
+
 		
-		\subsection{Bidirectional Attention RNN for Textual Story Generation}
+\subsection{Bidirectional Attention Recurrent Neural Network}
+In order to generate narrative paragraph from photo stream, we need to not only learn from photos but also analyse from sentences. Based on this idea, the approach Bidirectional Attention Recurrent Neural Network is separated by two main parts, one is aimed to combine sentence embedding space with image embedding space called Semantic Space Embedding and another one is aimed to predict sentence embedding features using Bidirectional Attention Recurrent Neural Network. In general, photo streams and corresponding sentences as input would be manipulated by CNN and Word2Vecs. For image stream, each image would be transformed into 4096-dimension VGG features \cite{Simonyan14c}and then mapped into 300-dimension image embedding space. For sentence, each sentence would be transformed by Word2Vecs \cite{DBLP:journals/corr/MikolovSCCD13}into 300-dimension sentence semantic embedding space. There is a very important assumption that 300-dimension image embedding space and 300-dimension sentence semantic embedding space share one embedding space, which means if the contents of image and sentence are similar then their euclidean distance is close. 
+
+{\bf Joint Embedding for Semantic Space}  To create this semantic space embedding, we could use a loss function and then use learning algorithm to approach the minimum loss value. Here we use a contrastive loss function equation\ref{eq:lfss}:
+
+\begin{small}
+\begin{equation}
+\begin{aligned}
+C^{remb}(x,v) = \sum_{x \in X, v \in V, v^{'} \in V^{'}} max(0, \alpha -xv + xv^{'}) \\
+				 + \sum_{x \in X, x^{'} \in X^{'}, v \in V} max(0, \alpha -xv + x^{'}v),
+\end{aligned}
+\label{eq:lfss}
+\end{equation}
+\end{small}
+where $X$ is the image embedding vector and $V$ is the sentence embedding vector, $X^{'}$ and $ V^{'}$ are negative paired image and sentence sample, $\alpha$ is entropy for judging positive image-sentence pair similarity. Contrastive loss function \cite{1467314} is aimed to make gradient of loss function successfully approach to minimum value. The principle of contrastive is that we want to introduce a negative pair to confirm that the result we get is what we expect but not stochastic error. For example we get a result from equation and I want to know this equation that is correctly. So we input a wrong number into the equation, if we get correct result then we can confirm this equation does not work. 
+
+{\bf Bidirectional Attention Recurrent Neural Network for Textual Story Generation} The goal of this part is to use Bidirectional RNN with Attention modelling to predict sentence embedding features. The input of BARNN model is image and sentence embedding vectors. The output $h$ is sentence embedding features with image stream inputting. 
+
+The idea of Attention modelling \cite{730558} is that when human focus on one object, they would ignore something non-relevant,so that we can introduce new attention weight to balance what should be concentrated on or what should be ignored. Meanwhile, under the assumption that same content has close distance in embedding space, we introduce equation \ref{eq:re}:
+\begin{equation}
+R_{pt} = x_{p}x_{t},
+\label{eq:re}
+\end{equation}    
+where $x_{p}$ and $x_{t}$ are $p$ and $t$ time inputting images, and $R_{pt}$ is the relation of image $x_{p}$ and image $x_{t}$. We use $R_{pt}$ as our attention weight to focus on objects that are more important, then we add them more weight.
+
+Later we have a new designed Gated Recurrent Unit with skip gate we called Skip-GRU. The classic GRU\cite{DBLP:journals/corr/ChungGCB14} has update gate and reset gate. In order to introduce our attention modelling, we add a skip gate. The advantage of skip-gate is that we can add attention weight to current hidden state and furthermore it can influence the main object features in our semantic embedding space. See our Skip-GRU equations \ref{eq:skip}:
+\begin{equation}
+\begin{aligned}
+z_t &= \sigma(W_{zx}x_{t} + W_{zh}h_{t-1}) \\
+r_t &= \sigma(W_{rx}x_{t} + W_{rh}h_{t-1}) \\
+s_t &= \sigma(W_{sx}x_{t} + W_{sh}h_{p}) \\
+\tilde{h} &= \tanh(W_{hx}x_{t} + W_{hh}r{t} \odot h_{t-1}\\
+		 & + \sum_{p<t} R_{pt} \cdot W_{hp}s_{t} \odot h_{p}) \\
+h_{t} &= z_{t}\tilde{h} + (1-z_{t}h_{t-1}),
+\end{aligned}
+\label{eq:skip}
+\end{equation}  
+where $t$ and $p$ are times, $x_t$ and $x_p$ are t time and p time input image, $z_t$, $r_t$ and $s_t$ are t time update gate, reset gate and skip gate, $\tilde{h}$ and $h_t$ are current hidden state and t time output, $\odot$ means element-wise multiplication and $\tanh$ means hyper tangent function.
+
+For Bidirectional Framework, we apply our new skip-GRU into our framework in both forward and backward pass. See equation \ref{eq:bf}below:
+\begin{equation}
+\begin{aligned}
+(z_{t}^{f}, r_{t}^{f}, s_{t}^{f}, \tilde{h}^{f}, h_{t}^{f}) &= sGRU(x_{t}, h_{t-1}^{f}, R, h_{p}^{f}; W^{f})\\
+(z_{t}^{b}, r_{t}^{b}, s_{t}^{b}, \tilde{h}^{b}, h_{t}^{b}) &= sGRU(x_{t}, h_{t-1}^{b}, R^{T}, h_{p}^{b}; W^{b})\\
+h_{t} &= W_{h}^{f}h_{t}^{f} + W_{h}^{b}h_{t}^{b},
+\end{aligned}
+\label{eq:bf}
+\end{equation} 
+where $f$ means forward pass and $b$ means backward pass. We learn $W = (W^{f}, W^{b}, W_{h}^{f}, W_{h}^{b})$ as our parameters to learn. And $h$ is what we expect that predict sentence embedding features. 
+
+The contrastive loss function is quite same with equation \ref{eq:lfss} see equation \ref{eq:lfbi} below:
+\begin{small}
+\begin{equation}
+\begin{aligned}
+C^{cpt}(h,v) = \sum_{v^{'} \in V^{'}} max(0, \gamma -hv + hv^{'}) \\
+				 + \sum_{h^{'} \in H^{'}} max(0, \gamma -hv + h^{'}v),
+\end{aligned}
+\label{eq:lfbi}
+\end{equation}
+\end{small}
+where $h^{'}$ and $v^{'}$ are negative image-sentence pairs, and $\gamma$ is contrastive margin. By using equation \ref{eq:lfbi} we can learn parameter $W$ combined with corresponding image captioning.
+
+Finally, we combine two contrastive loss functions, joint embedding semantic space and bidirectional attention RNN, as one equation \ref{eq:combine} see below:
+\begin{equation}
+C = \sum_{X,V} C^{emb}(x,v) + \sum_{H,V}C^{cpt}(h,v),
+\label{eq:combine}
+\end{equation}
+where $X$ is sequential image embedding vectors, $V$ is corresponding sentence embedding vectors and $H$ is predict corresponding sentence vectors from BARNN model.
+
+
+\subsection{Coherence Recurrent Convolutional Network}
+
+
+\subsection{Adversarial Training}
+
 		
-	\section{Experiment}
+\section{Experiment}
 	
+\section{Evaluation}
 
-	\section{Evaluation}
 
+\section{Discussion}
 
-	\section{Discussion}
-		aaaaa \cite{Chandra:81}
-
-	\bibliography{bibliography}
-	\bibliographystyle{fss2017seminar}
+\bibliography{bibliography}
+\bibliographystyle{fss2017seminar}
 
 \end{document}
