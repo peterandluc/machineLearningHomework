@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2017.11.21)  6 DEC 2017 02:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2017.11.21)  8 DEC 2017 03:45
 entering extended mode
 **./seminar.tex
 (seminar.tex
@@ -153,22 +153,25 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSb=\mathgroup6
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-)) (seminar.aux)
+)) ("C:\Program Files\MiKTeX 2.9\tex\latex\doublestroke\dsfont.sty"
+Package: dsfont 1995/08/01 v0.1 Double stroke roman fonts
+)
+(seminar.aux)
 \openout1 = `seminar.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 48.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 49.
 
 ("C:\Users\hubo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
@@ -243,47 +246,47 @@ G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 50.
-LaTeX Font Info:    Try loading font information for U+lasy on input line 50.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 51.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 51.
 
 ("C:\Users\hubo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ulasy.fd"
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 50.
+LaTeX Font Info:    Try loading font information for U+msa on input line 51.
 
 ("C:\Users\hubo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 50.
+LaTeX Font Info:    Try loading font information for U+msb on input line 51.
 
 ("C:\Users\hubo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 50.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 50.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 51.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 51.
 
 ("C:\Users\hubo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\ot1pcr.fd"
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Underfull \hbox (badness 2150) in paragraph at lines 53--54
+Underfull \hbox (badness 2150) in paragraph at lines 54--55
 \OT1/ptm/m/n/10.95 them gen-er-at-ing story from se-quen-tial
  []
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 64.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 72.
 
-Underfull \hbox (badness 1005) in paragraph at lines 80--81
+Underfull \hbox (badness 1005) in paragraph at lines 73--74
 \OT1/ptm/m/n/10.95 In or-der to gen-er-ate nar-ra-tive para-graph from
  []
 
 
-Underfull \hbox (badness 1226) in paragraph at lines 80--81
+Underfull \hbox (badness 1226) in paragraph at lines 73--74
 \OT1/ptm/m/n/10.95 each im-age would be trans-formed into 4096-
  []
 
 
-Underfull \hbox (badness 1127) in paragraph at lines 80--81
+Underfull \hbox (badness 1127) in paragraph at lines 73--74
 \OT1/ptm/m/n/10.95 im-age em-bed-ding space. For sen-tence, each
  []
 
@@ -292,52 +295,86 @@ Underfull \hbox (badness 1127) in paragraph at lines 80--81
 
 
 ]
-Underfull \hbox (badness 2707) in paragraph at lines 95--96
+Underfull \hbox (badness 2707) in paragraph at lines 88--89
 []\OT1/ptm/b/n/10.95 Bidirectional At-ten-tion Re-cur-rent Neu-ral
  []
 
 
-Overfull \hbox (10.86885pt too wide) detected at line 126
+Overfull \hbox (10.86885pt too wide) detected at line 119
 [][]
  []
 
-[2] (seminar.bbl) [3
+[2]
+Underfull \hbox (badness 2073) in paragraph at lines 146--147
+[]\OT1/ptm/b/n/10.95 Bidirectional Neu-ral Net-work model \OT1/ptm/m/n/10.95 Th
+e
+ []
+
+[3]
+Underfull \hbox (badness 1389) in paragraph at lines 182--183
+[]\OT1/ptm/b/n/10.95 Hierarchical Story Gen-er-a-tor \OT1/ptm/m/n/10.95 To gen-
+er-ate
+ []
+
+LaTeX Font Info:    Try loading font information for U+dsrom on input line 186.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\doublestroke\udsrom.fd"
+File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
+)
+Underfull \hbox (badness 1038) in paragraph at lines 204--205
+\OT1/ptm/m/n/10.95 human-level un-der-stand-ing sen-tence. See the
+ []
+
+
+Overfull \hbox (3.8605pt too wide) detected at line 216
+\OML/cmm/m/it/10.95 R\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 y[]\OMS/cmsy/m/n/1
+0.95 j\OT1/cmr/m/n/10.95 ) = \OML/cmm/m/it/10.95 C[]\OT1/cmr/m/n/10.95 (\OML/
+cmm/m/it/10.95 paired\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 x[]; y[]\OT1/cmr/
+m/n/10.95 ) + (1 \OMS/cmsy/m/n/10.95   \OML/cmm/m/it/10.95 \OT1/cmr/m/n/10.95 
+)\OML/cmm/m/it/10.95 C[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 gt\OMS/cmsy/m/n
+/10.95 j\OML/cmm/m/it/10.95 y\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.95 ;
+ []
+
+(seminar.bbl [4]) [5
 
 ] (seminar.aux) )
 (\end occurred when \iffalse on line 331 was incomplete) 
 Here is how much of TeX's memory you used:
- 2626 strings out of 493323
- 36260 string characters out of 3130448
- 102967 words of memory out of 3000000
- 6098 multiletter control sequences out of 15000+200000
- 27134 words of font info for 73 fonts, out of 3000000 for 9000
+ 2663 strings out of 493323
+ 37012 string characters out of 3130448
+ 103252 words of memory out of 3000000
+ 6126 multiletter control sequences out of 15000+200000
+ 27422 words of font info for 76 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  39i,9n,26p,1202b,261s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/hubo/AppData/
-Local/Programs/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/hubo/AppData/Lo
-cal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/hub
-o/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmex9.p
+Local/Programs/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc} <C:\Users\hubo\AppData\L
+ocal\MiKTeX\2.9\fonts\pk\ljfour\public\doublestroke\dpi657\dsrom10.pk><C:/Users
+/hubo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.p
 fb><C:/Users/hubo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
-/cm/cmmi10.pfb><C:/Users/hubo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
-lic/amsfonts/cm/cmmi6.pfb><C:/Users/hubo/AppData/Local/Programs/MiKTeX 2.9/font
-s/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/hubo/AppData/Local/Programs/MiKT
-eX 2.9/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Users/hubo/AppData/Local/Pr
-ograms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/hubo/AppDa
-ta/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/
-hubo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb>
-<C:/Users/hubo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
-/cmsy10.pfb><C:/Users/hubo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public
-/amsfonts/cm/cmsy5.pfb><C:/Users/hubo/AppData/Local/Programs/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmsy6.pfb><C:/Users/hubo/AppData/Local/Programs/MiKTeX 
-2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/hubo/AppData/Local/Progr
-ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/Users/hubo/AppData/
-Local/Programs/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/hubo/App
-Data/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Users/hubo/
-AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Users/hu
-bo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on seminar.pdf (3 pages, 193553 bytes).
+/cmextra/cmex9.pfb><C:/Users/hubo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmmi10.pfb><C:/Users/hubo/AppData/Local/Programs/MiKTeX 2.9
+/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/hubo/AppData/Local/Programs
+/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/hubo/AppData/Loc
+al/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Users/hubo/
+AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/
+Users/hubo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr
+8.pfb><C:/Users/hubo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
+nts/cm/cmr9.pfb><C:/Users/hubo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
+blic/amsfonts/cm/cmsy10.pfb><C:/Users/hubo/AppData/Local/Programs/MiKTeX 2.9/fo
+nts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/hubo/AppData/Local/Programs/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/hubo/AppData/Local/
+Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/hubo/App
+Data/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/Use
+rs/hubo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/m
+sam10.pfb><C:/Users/hubo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/cour
+ier/ucrr8a.pfb><C:/Users/hubo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw
+/times/utmb8a.pfb><C:/Users/hubo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/
+urw/times/utmr8a.pfb><C:/Users/hubo/AppData/Local/Programs/MiKTeX 2.9/fonts/typ
+e1/urw/times/utmri8a.pfb>
+Output written on seminar.pdf (5 pages, 223730 bytes).
 PDF statistics:
- 85 PDF objects out of 1000 (max. 8388607)
+ 100 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

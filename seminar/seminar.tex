@@ -7,6 +7,7 @@
 \usepackage{latexsym}
 \usepackage{graphicx}
 \usepackage{amsmath,amssymb}
+\usepackage{dsfont}
 \graphicspath{ {images/} }
 
 \aclfinalcopy % Uncomment this line for the final submission
@@ -18,7 +19,7 @@
 \newcommand\BibTeX{B{\sc ib}\TeX}
 
 
-\title{Seminar: Generating Narrative Paragraph for Photo Stream via Bidirectional Attention Recurrent Neural Networks}
+\title{Seminar: Generating Narrative Paragraph for Photo Stream }
 
 % Author information can be set in various styles:
 % For several authors from the same institution:
@@ -50,26 +51,18 @@
 \maketitle
 
 \begin{abstract}
-When machine learning techniques develop rapidly in image captioning, other extension relevant areas appeal to many researchers doing further study. Among them generating story from sequential photo stream becomes quite interesting and challenging task. Compared with single image captioning, this task needs to handle with two mainly problems facing to researchers, large visual variance in sequence and longterm language coherence among multiple sentences. Till now those two critical questions are solved by different approaches. In this paper, we mainly focus on one of them, generating story from sequential photos stream via Bidirectional Attention Recurrent Neural Network method, and discus several relevant approaches from first paper to state-of-the-art.   
+When machine learning techniques develop rapidly in image captioning, other extension relevant areas appeal to many researchers doing further study. Among them generating story from sequential photo stream becomes quite interesting and challenging task. Compared with single image captioning, this task needs to handle with two mainly problems facing to researchers, large visual variance in sequence and long-term language coherence among multiple sentences. Till now those two critical questions are solved by different approaches. In this paper, we mainly focus on one of them, generating story from sequential photos stream via Bidirectional Attention Recurrent Neural Network method, and discus several relevant approaches from first paper to state-of-the-art.   
 \end{abstract}
 
 \section{Introduction}
-	
+With computing ability rapidly developing and new theory proposing, there are more and more intersection researches between computer vision area and natural language processing area occurring. This paper will focus on one specified topic from them, which is generating narrative paragraph for photo stream.  	
+
+The basic task for this topic is that given sequential photos as input and return a story to describe as output. The core problems which need to be solved are how to generate corresponding sentence and how to organize sentences as human-level story. The previous question is based on the related field Image Captioning, such as generator with deep recurrent structure \cite{vinyals2014neural}, deep visual-semantic alignments  \cite{Karpathy:2017:DVA:3069214.3069250}. However the different between this topic with image captioning is that image captioning mainly focus on individual image and this topic needs to handle with sequential photos. It would be more challenged that computer not only needs to understand the content of images but also need to find their inner relation.   
 
 
 \section{Related Work}
 	
-Due to interaction between computer vision and natural language processing is new topic, particularly in image description, there are several researches divided in three categories: single-frame to single-sentence, multi-frame to single-sentence and multi-frame to multi-sentence.		
 		
-\subsection{ Single-frame to single-sentence}
-These researches focus on image captioning task, which can be classified into two sub-categories: semantic element based methods
-
-\subsection{Multi-frame to single-sentence}
-This family of approaches, mainly focus on video captioning to captures the temporal dynamics in variable-length of video frames sequence and to map them to a variable-length of words.		
-		
-		
-\subsection{Multi-frame to multi-sentence}
-The work by is the first scheme to explore the task of image streams to sentence sequence.		
 		
 		
 \section{Approach}
@@ -148,8 +141,80 @@ where $X$ is sequential image embedding vectors, $V$ is corresponding sentence e
 
 \subsection{Coherence Recurrent Convolutional Network}
 
+For the first paper in this field, the model Coherence Recurrent Convolutional Network has a simple idea to implement the task that generates corresponding sentences from image stream. They divide CRCN model in three parts, first is Bidirectional Recurrent Neural Network (BRNN) which learns image captioning crawling from user blog, second is Convolutional Neural Network (CNN) which learns image representation then transforms into 4,096 image VGG vectors and the third is local coherence model \cite{Barzilay:2008:MLC:1350986.1350987} which learns sentence patterns and structures in order to combine several sentences as story or paragraph. For CNN part they directly use VGGNet \cite{Simonyan14c}, so in this approach, we mainly focus on Bidirectional Recurrent Neural Network (BRNN) and local coherence model.
+
+{\bf Bidirectional Neural Network model} The goal of BRNN is to learn corresponding sentences content and also consider previous and next sentence content as we already mention in BARNN approach. In BRNN model, there are five layers, input layer, forward layer, backward layer, output layer and ReLU activation layer. See the equation \ref{eq:BRNN} below:
+\begin{equation}
+\begin{aligned}
+x_{t}^{f} &= f(W_{i}^{f}p_{t}+b_{i}^{f}) \\
+x_{t}^{b} &= f(W_{i}^{b}p_{t}+b_{i}^{b}) \\
+h_{t}^{f} &= f(x_{t}^{f} + W_{f}h_{t-1}^{f}+b_{f}) \\
+h_{t}^{b} &= f(x_{t}^{b} + W_{b}h_{t-1}^{b}+b_{b}) \\
+o_{t} &= W_{o}(h_{t}^{f} + h_{t}^{b}) + b_{o}, 
+\end{aligned}
+\label{eq:BRNN}
+\end{equation} 
+where $p_t$ is 300-dimension embedding vectors from sentence as our input, $x_f$ and $x_b$ are forward and backward units activated input, $h_f$ and $h_b$ are forward and backward units output, $o_t$ is in time the output of ReLU layer as the content of this sentence, $f$ is ReLU activation function $f(x) = max(0,x)$ and $W$ and $b$ are weights and bias term. 
+
+
+{\bf The local coherence model} In order to understand the sentence structure and content, they introduce local coherence model. The basic idea is that they make a table which contains discourse entity as row and sentence as column. The discourse entity grid is from sequential parse trees where extract from sequential text by using Stanford core NLP library \cite{manningetal2014}. And then in grammatical aspect, they separate into four categories: $S$ denotes subject, $O$ denotes object, $X$ denotes others except for subject or object, and $-$ denotes absent. Finally we computer their ratio by occurrence frequency and transform them into 300-dimension vector by zero-padding.
+
+{\bf  Combination of CNN, BRNN, and Coherence Model} To combine BRNN and coherence model, they use two fully connected layers (FC) \cite{Barzilay:2008:MLC:1350986.1350987}. The two FC layers can combine both sentence content and sentence structure then map them into 4,096-dimension vector which is same dimension as image vectors. To compute sentence vector and image vector they use this score function \ref{eq:score}  \cite{Karpathy_2015_CVPR} as follow:
+\begin{equation}
+S_{kl} = \sum_{t = 1 \ldots N} s_{t}^{k} \cdot v_{t}^{l} + g^{k} \cdot v_{t}^{l},
+\label{eq:score}
+\end{equation}
+where $S_{kl}$ means score between image $k$ and sentence $l$, $v_{t}^{l}$ is CNN output of stream $l$ in time $t$, $s_{t}^{k}$ means the set of words s for image $k$, and $g^{k}$ is the set of image fragments in image $k$ \cite{Karpathy:2014:DFE:2969033.2969038}. Finally, they create a loss function \ref{eq:crcnloss} to learn their Coherence Recurrent Convolutional Network model as follow:
+\begin{equation}
+\begin{aligned}
+C(\theta) &= \sum_k \langle \sum_l \max (0, 1 + S_{kl} - S_{kk}) \\
+&+ \sum_l \max (0, 1 + S_{lk} - S_{kk})\rangle,
+\end{aligned}
+\label{eq:crcnloss}
+\end{equation}
+where $S_{kk}$ is positive image and sentence pair, $S_{kl}$ and $S_{lk}$ are negative image and sentence pair. Our first approach BARNN uses this loss function but they use $\gamma$ instead of 1. However both of them are inspired by \cite{Karpathy:2014:DFE:2969033.2969038}. 
 
 \subsection{Adversarial Training}
+
+The model generating paragraph from stream photos with adversarial training is the newest model in this field to the best of my knowledge. The basic idea for this model is that they create a hierarchical story generator with Convolutional Neural Network (CNN) and Hierarchical Recurrent Neural Network (HRNN) to generate story from sequential photos inputting, and then they build two discriminators which critic determines whether the image and generated sentence are similar and critic determines whether the generated sentence is human-level story. Finally, by adversarial training, the model would be more and more powerful.
+
+
+{\bf Hierarchical Story Generator} To generate story-style narrative paragraph, they use train two RNN as encoder and decoder which both are built on Gated Recurrent Units (GRUs) \cite{DBLP:journals/corr/ChungGCB14}. In order to train Hierarchical Story generator, they treat the generator as agent, and they build the loss function \ref{eq:adloss} as below:
+\begin{equation}
+\begin{aligned}
+L(\theta) &= - \sum_{n=1}^{N} \sum_{t=1}^{T} p_{\theta} (y_{n,t}|x_{1:n};y_{n,1:t-1})R(y_n) \\
+&= -\sum_{n=1}^{N} \mathds{E}_{y_{n} \backsim  p_{\theta}} [R(y_{n})], 
+\end{aligned}
+\label{eq:adloss}
+\end{equation}
+where $R(x)$ is reward function which will be mentioned later, generator parameter $\theta$ defined a policy $p_{\theta} (y_{n,t}|x_{1:n};y_{n,1:t-1})$, $x$ means observed image and $y$ represents generated sentence. 
+
+{\bf Multi-modal Discriminator} This discriminator is to tell how similar between image and generated sentence is. The multi-model discriminator contains fusion mechanism is inspired by \cite{VQA} and a fully connected layer followed by a softmax layer, the equation \ref{eq:multimodel} see below:
+\begin{equation}
+\begin{aligned}
+v_{x_{n}} &= W_{x} \cdot x_{n} + b_{x} \\
+v_{y_{n}} &= W_{y} \cdot LSTM_{\eta}(y_{n}) + b_{y} \\
+f_{n} &= \tanh(v_{x_{n}}) \odot \tanh(v_{y_{n}}) \\
+C_{n}^{m} &= softmax(W_{m} \cdot f_{n} + b_{m}),  
+\end{aligned}
+\label{eq:multimodel}
+\end{equation}
+where $x_n$ is image $x$, $y_n$ is sentence, $v_{x_{n}}$ denotes embedded image feature by linear layer, $v_{y_{n}}$ denotes sentence vector by sentence inputting into Long-short Term Memory network, $f_n$ denotes fused vector, $C_{n}^{m}$ is our multi-model discriminator where $C_{n}^{m}(c|x_{n}, y_{n})$ can be seen probability and $c \in {paired, unpaired, generated}$. For example, $C_{n}^{m}(paired|x_{n}, y_{n})$ means what is the probability of image and generated sentence are paired.
+
+{\bf Language-style Discriminator} The other discriminator is language-style discriminator, which is aimed to check if the generated sentence is human-level understanding sentence. See the equation \ref{eq:landis} as follow:
+\begin{equation}
+\begin{aligned}
+v_{p} &= LSTM_{\phi} (\overline{p}) \\
+C^{s} &= softmax(W_{p} \cdot v_{p} + b_{p}),
+\end{aligned}
+\label{eq:landis}
+\end{equation}
+where $v_{p}$ denotes the last hidden state as the encoded paragraph vector, $\overline{p}$ denotes paragraph embedding and $C^{s}$ denotes the probability $C^{s}(gt|y)$ which means how similar with $ground truth(gt)$. Finally, they create the reward function \ref{eq:reward} defined below:
+\begin{equation}
+R(y_{n}|\cdot) = \lambda C_{n}^{m}(paired|x_n,y_n)+ (1 - \lambda) C_{n}^{s}(gt|y),
+\label{eq:reward}
+\end{equation}
+where $\lambda$ denotes tradeoff parameter.
 
 		
 \section{Experiment}

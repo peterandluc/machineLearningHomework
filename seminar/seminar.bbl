@@ -1,5 +1,19 @@
 \begin{thebibliography}{}
 
+\bibitem[\protect\citename{Antol \bgroup et al.\egroup }2015]{VQA}
+Stanislaw Antol, Aishwarya Agrawal, Jiasen Lu, Margaret Mitchell, Dhruv Batra,
+  C.~Lawrence Zitnick, and Devi Parikh.
+\newblock 2015.
+\newblock {VQA}: {V}isual {Q}uestion {A}nswering.
+\newblock In {\em International Conference on Computer Vision (ICCV)}.
+
+\bibitem[\protect\citename{Barzilay and
+  Lapata}2008]{Barzilay:2008:MLC:1350986.1350987}
+Regina Barzilay and Mirella Lapata.
+\newblock 2008.
+\newblock Modeling local coherence: An entity-based approach.
+\newblock {\em Comput. Linguist.}, 34(1):1--34, March.
+
 \bibitem[\protect\citename{Chopra \bgroup et al.\egroup }2005]{1467314}
 S.~Chopra, R.~Hadsell, and Y.~LeCun.
 \newblock 2005.
@@ -24,6 +38,38 @@ L.~Itti, C.~Koch, and E.~Niebur.
 \newblock {\em IEEE Transactions on Pattern Analysis and Machine Intelligence},
   20(11):1254--1259, Nov.
 
+\bibitem[\protect\citename{Karpathy and Fei-Fei}2015]{Karpathy_2015_CVPR}
+Andrej Karpathy and Li~Fei-Fei.
+\newblock 2015.
+\newblock Deep visual-semantic alignments for generating image descriptions.
+\newblock In {\em The IEEE Conference on Computer Vision and Pattern
+  Recognition (CVPR)}, June.
+
+\bibitem[\protect\citename{Karpathy and
+  Fei-Fei}2017]{Karpathy:2017:DVA:3069214.3069250}
+Andrej Karpathy and Li~Fei-Fei.
+\newblock 2017.
+\newblock Deep visual-semantic alignments for generating image descriptions.
+\newblock {\em IEEE Trans. Pattern Anal. Mach. Intell.}, 39(4):664--676, April.
+
+\bibitem[\protect\citename{Karpathy \bgroup et al.\egroup
+  }2014]{Karpathy:2014:DFE:2969033.2969038}
+Andrej Karpathy, Armand Joulin, and Li~Fei-Fei.
+\newblock 2014.
+\newblock Deep fragment embeddings for bidirectional image sentence mapping.
+\newblock In {\em Proceedings of the 27th International Conference on Neural
+  Information Processing Systems - Volume 2}, NIPS'14, pages 1889--1897,
+  Cambridge, MA, USA. MIT Press.
+
+\bibitem[\protect\citename{Manning \bgroup et al.\egroup
+  }2014]{manningetal2014}
+Christopher~D. Manning, Mihai Surdeanu, John Bauer, Jenny Finkel, Steven~J.
+  Bethard, and David McClosky.
+\newblock 2014.
+\newblock The {Stanford} {CoreNLP} natural language processing toolkit.
+\newblock In {\em Proceedings of 52nd Annual Meeting of the Association for
+  Computational Linguistics: System Demonstrations}, pages 55--60.
+
 \bibitem[\protect\citename{Mikolov \bgroup et al.\egroup
   }2013]{DBLP:journals/corr/MikolovSCCD13}
 Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg Corrado, and Jeffrey Dean.
@@ -45,6 +91,13 @@ K.~Simonyan and A.~Zisserman.
 \newblock 2014.
 \newblock Very deep convolutional networks for large-scale image recognition.
 \newblock {\em CoRR}, abs/1409.1556.
+
+\bibitem[\protect\citename{Vinyals \bgroup et al.\egroup
+  }2014]{vinyals2014neural}
+Oriol Vinyals, Alexander Toshev, Samy Bengio, and Dumitru Erhan.
+\newblock 2014.
+\newblock Show and tell: A neural image caption generator.
+\newblock cite arxiv:1411.4555.
 
 \bibitem[\protect\citename{Wang \bgroup et al.\egroup
   }2018]{show-reward-tell-automatic-generation-narrative-paragraph-photo-stream-adversarial-training}
