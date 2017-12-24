@@ -7,6 +7,15 @@ Stanislaw Antol, Aishwarya Agrawal, Jiasen Lu, Margaret Mitchell, Dhruv Batra,
 \newblock {VQA}: {V}isual {Q}uestion {A}nswering.
 \newblock In {\em International Conference on Computer Vision (ICCV)}.
 
+\bibitem[\protect\citename{Banerjee and Lavie}2005]{banerjee2005meteor}
+Satanjeev Banerjee and Alon Lavie.
+\newblock 2005.
+\newblock Meteor: An automatic metric for mt evaluation with improved
+  correlation with human judgments.
+\newblock In {\em Proceedings of the acl workshop on intrinsic and extrinsic
+  evaluation measures for machine translation and/or summarization}, volume~29,
+  pages 65--72.
+
 \bibitem[\protect\citename{Barzilay and
   Lapata}2008]{Barzilay:2008:MLC:1350986.1350987}
 Regina Barzilay and Mirella Lapata.
@@ -30,6 +39,52 @@ Junyoung Chung, {\c{C}}aglar G{\"{u}}l{\c{c}}ehre, KyungHyun Cho, and Yoshua
 \newblock Empirical evaluation of gated recurrent neural networks on sequence
   modeling.
 \newblock {\em CoRR}, abs/1412.3555.
+
+\bibitem[\protect\citename{Goodfellow \bgroup et al.\egroup
+  }2014]{goodfellow2014generative}
+Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley,
+  Sherjil Ozair, Aaron Courville, and Yoshua Bengio.
+\newblock 2014.
+\newblock Generative adversarial nets.
+\newblock In {\em Advances in neural information processing systems}, pages
+  2672--2680.
+
+\bibitem[\protect\citename{Graves \bgroup et al.\egroup
+  }2013]{graves2013speech}
+Alex Graves, Abdel-rahman Mohamed, and Geoffrey Hinton.
+\newblock 2013.
+\newblock Speech recognition with deep recurrent neural networks.
+\newblock In {\em Acoustics, speech and signal processing (icassp), 2013 ieee
+  international conference on}, pages 6645--6649. IEEE.
+
+\bibitem[\protect\citename{He \bgroup et al.\egroup }2016]{he2016deep}
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.
+\newblock 2016.
+\newblock Deep residual learning for image recognition.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 770--778.
+
+\bibitem[\protect\citename{Hochreiter and Schmidhuber}1997]{hochreiter1997long}
+Sepp Hochreiter and J{\"u}rgen Schmidhuber.
+\newblock 1997.
+\newblock Long short-term memory.
+\newblock {\em Neural computation}, 9(8):1735--1780.
+
+\bibitem[\protect\citename{Hornik \bgroup et al.\egroup
+  }1989]{hornik1989multilayer}
+Kurt Hornik, Maxwell Stinchcombe, and Halbert White.
+\newblock 1989.
+\newblock Multilayer feedforward networks are universal approximators.
+\newblock {\em Neural networks}, 2(5):359--366.
+
+\bibitem[\protect\citename{Huang \bgroup et al.\egroup }2016]{huang2016visual}
+Ting-Hao~K. Huang, Francis Ferraro, Nasrin Mostafazadeh, Ishan Misra, Jacob
+  Devlin, Aishwarya Agrawal, Ross Girshick, Xiaodong He, Pushmeet Kohli, Dhruv
+  Batra, et~al.
+\newblock 2016.
+\newblock Visual storytelling.
+\newblock In {\em 15th Annual Conference of the North American Chapter of the
+  Association for Computational Linguistics (NAACL 2016)}.
 
 \bibitem[\protect\citename{Itti \bgroup et al.\egroup }1998]{730558}
 L.~Itti, C.~Koch, and E.~Niebur.
@@ -61,6 +116,38 @@ Andrej Karpathy, Armand Joulin, and Li~Fei-Fei.
   Information Processing Systems - Volume 2}, NIPS'14, pages 1889--1897,
   Cambridge, MA, USA. MIT Press.
 
+\bibitem[\protect\citename{Kim \bgroup et al.\egroup
+  }2015]{gunhee-cvpr-15-text2pic}
+Gunhee Kim, Seungwhan Moon, and Leonid Sigal.
+\newblock 2015.
+\newblock {Ranking and Retrieval of Image Sequences from Multiple Paragraph
+  Queries}.
+\newblock In {\em 28th IEEE Conference on Computer Vision and Pattern
+  Recognition (CVPR 2015)}.
+
+\bibitem[\protect\citename{Krizhevsky \bgroup et al.\egroup
+  }2012]{NIPS2012_4824}
+Alex Krizhevsky, Ilya Sutskever, and Geoffrey~E Hinton.
+\newblock 2012.
+\newblock Imagenet classification with deep convolutional neural networks.
+\newblock In F.~Pereira, C.~J.~C. Burges, L.~Bottou, and K.~Q. Weinberger,
+  editors, {\em Advances in Neural Information Processing Systems 25}, pages
+  1097--1105. Curran Associates, Inc.
+
+\bibitem[\protect\citename{LeCun \bgroup et al.\egroup
+  }1998]{lecun1998gradient}
+Yann LeCun, L{\'e}on Bottou, Yoshua Bengio, and Patrick Haffner.
+\newblock 1998.
+\newblock Gradient-based learning applied to document recognition.
+\newblock {\em Proceedings of the IEEE}, 86(11):2278--2324.
+
+\bibitem[\protect\citename{Liu \bgroup et al.\egroup }2017]{liu2017let}
+Yu~Liu, Jianlong Fu, Tao Mei, and Chang~Wen Chen.
+\newblock 2017.
+\newblock Let your photos talk: Generating narrative paragraph for photo stream
+  via bidirectional attention recurrent neural networks.
+\newblock In {\em AAAI}, pages 1445--1452.
+
 \bibitem[\protect\citename{Manning \bgroup et al.\egroup
   }2014]{manningetal2014}
 Christopher~D. Manning, Mihai Surdeanu, John Bauer, Jenny Finkel, Steven~J.
@@ -78,6 +165,15 @@ Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg Corrado, and Jeffrey Dean.
   compositionality.
 \newblock {\em CoRR}, abs/1310.4546.
 
+\bibitem[\protect\citename{Papineni \bgroup et al.\egroup
+  }2002]{papineni2002bleu}
+Kishore Papineni, Salim Roukos, Todd Ward, and Wei-Jing Zhu.
+\newblock 2002.
+\newblock Bleu: a method for automatic evaluation of machine translation.
+\newblock In {\em Proceedings of the 40th annual meeting on association for
+  computational linguistics}, pages 311--318. Association for Computational
+  Linguistics.
+
 \bibitem[\protect\citename{Park and Kim}2015]{NIPS2015_5776}
 Cesc~C Park and Gunhee Kim.
 \newblock 2015.
@@ -86,11 +182,43 @@ Cesc~C Park and Gunhee Kim.
   editors, {\em Advances in Neural Information Processing Systems 28}, pages
   73--81. Curran Associates, Inc.
 
+\bibitem[\protect\citename{Schuster and
+  Paliwal}1997]{schuster1997bidirectional}
+Mike Schuster and Kuldip~K Paliwal.
+\newblock 1997.
+\newblock Bidirectional recurrent neural networks.
+\newblock {\em IEEE Transactions on Signal Processing}, 45(11):2673--2681.
+
 \bibitem[\protect\citename{Simonyan and Zisserman}2014]{Simonyan14c}
 K.~Simonyan and A.~Zisserman.
 \newblock 2014.
 \newblock Very deep convolutional networks for large-scale image recognition.
 \newblock {\em CoRR}, abs/1409.1556.
+
+\bibitem[\protect\citename{Steinkraus \bgroup et al.\egroup
+  }2005]{steinkraus2005using}
+Dave Steinkraus, I~Buck, and PY~Simard.
+\newblock 2005.
+\newblock Using gpus for machine learning algorithms.
+\newblock In {\em Document Analysis and Recognition, 2005. Proceedings. Eighth
+  International Conference on}, pages 1115--1120. IEEE.
+
+\bibitem[\protect\citename{Szegedy \bgroup et al.\egroup
+  }2015]{szegedy2015going}
+Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir
+  Anguelov, Dumitru Erhan, Vincent Vanhoucke, and Andrew Rabinovich.
+\newblock 2015.
+\newblock Going deeper with convolutions.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 1--9.
+
+\bibitem[\protect\citename{Vedantam \bgroup et al.\egroup
+  }2015]{vedantam2015cider}
+Ramakrishna Vedantam, C~Lawrence~Zitnick, and Devi Parikh.
+\newblock 2015.
+\newblock Cider: Consensus-based image description evaluation.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 4566--4575.
 
 \bibitem[\protect\citename{Vinyals \bgroup et al.\egroup
   }2014]{vinyals2014neural}
